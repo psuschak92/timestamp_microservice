@@ -34,12 +34,12 @@ app.get('/api/:date',(req, res, next) => {
 
   if(dateRe.test(dateReq)) {
     // 2. convert date to utc
-    const utc = unixRe.test(dateReq) ?  new Date(dateReq * 1000).toUTCString(): new Date(dateReq).toUTCString();
+    const utc = unixRe.test(dateReq) ?  new Date(Number(dateReq)).toUTCString(): new Date(dateReq).toUTCString();
     // 3. convert date to unix
-    const unix = unixRe.test(dateReq) ? dateReq : new Date(dateReq).getTime() / 1000;
-    res.json({'unix':  unix, 'utc': utc});
+    const unix = unixRe.test(dateReq) ? Number(dateReq) : new Date(dateReq).getTime();
+    res.json({unix, utc});
   } else {
-    res.json({'error': 'invalid date'});
+    res.json({'error': 'Invalid Date'});
   }
 });
 
